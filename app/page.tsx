@@ -483,13 +483,16 @@ function ChatDemo() {
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMessages([{ id: '0', type: 'bot', text: selected.defaultResponse, time: getTime() }])
   }, [selected])
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
   }, [messages, typing])
 
   const send = useCallback(
@@ -563,7 +566,7 @@ function ChatDemo() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-2 wa-chat-bg chat-scroll">
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-3 space-y-2 wa-chat-bg chat-scroll">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
@@ -591,7 +594,6 @@ function ChatDemo() {
                   </div>
                 </div>
               )}
-              <div ref={endRef} />
             </div>
 
             {/* Quick replies */}
