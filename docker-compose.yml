@@ -1,12 +1,16 @@
 services:
   atiende:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     restart: unless-stopped
     ports:
       - "3001:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
+    networks:
+      - prittor-proxy
+
+networks:
+  prittor-proxy:
+    external: true
