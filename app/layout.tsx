@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Syne, DM_Sans } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const syne = Syne({
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className={`${syne.variable} ${dmSans.variable}`}>
       <body className="bg-bg text-text font-body antialiased">{children}</body>
+      <Script defer src="https://analytics.prittor.com/script.js" data-website-id="7bdf2b89-54c1-49d4-8ae5-6357598a6130" strategy="afterInteractive" />
     </html>
   )
 }
